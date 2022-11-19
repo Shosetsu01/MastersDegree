@@ -1,1 +1,0 @@
-# sharaga-collectivnaya-laba-3
