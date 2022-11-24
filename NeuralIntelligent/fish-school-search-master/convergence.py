@@ -10,17 +10,17 @@ class Convergence:
         fig = plt.figure()
         ax = fig.add_subplot()
 
-        ax.set_xlabel('iteration')
+        ax.set_xlabel('Итерации')
 
         iterations = range(len(self.history.get('steps')))
         ax.plot(iterations, [self.max_value for _ in iterations], c="Green")
 
         if max_or_avg == 'max':
             max_fitness = [max(fish.get('fitness_value') for fish in fishes) for fishes in self.history.get('steps')]
-            ax.set_ylabel('max')
+            ax.set_ylabel('Максимум')
             ax.plot(iterations, max_fitness, c="Red")
         else:
-            ax.set_ylabel('avg')
+            ax.set_ylabel('Среднее значение')
             avg_fitness = [sum(fish.get('fitness_value') for fish in fishes) / len(fishes) for fishes in self.history.get('steps')]
             ax.plot(iterations, avg_fitness, c="Blue")
 

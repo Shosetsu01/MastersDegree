@@ -13,6 +13,7 @@ class FishSchoolSearch:
             self.individual_delta_point = np.zeros(swim_start_point.size, dtype=np.core.float64)
             self.individual_delta_fitness = 0
 
+    # Запись итераций для построения графика.
     def history(self):
         return {
             "steps": self.__history,
@@ -31,6 +32,7 @@ class FishSchoolSearch:
 
         self.__history.append(fishes)
 
+    # Объявление
     def __init__(
             self,
             lower_bound_point: Iterable[int],
@@ -54,6 +56,7 @@ class FishSchoolSearch:
         self.__fitness_func = func
         self.__history = []
 
+        # Базовое исключение
         if self.__lower_bound_point.size != self.__higher_bound_point.size:
             raise BaseException("fhfg")  # todo
 

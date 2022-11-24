@@ -13,8 +13,8 @@ def cmp(point, max_val, fss_point, fss_max_value, fss):
     print("значение в точке максимума: ", max_val)
     print("максимум найденный FSS: ", fss_point)
     print("значение в максимуме FSS: ", fss_max_value)
-    print("|x' - x|: ", max(np.abs(fss_point - point)))
-    print("|f(x') - f(x)| :", np.abs(fss_max_value - max_val))
+    print("|x' - x| (найденный FSS - теоретический максимум): ", max(np.abs(fss_point - point)))
+    print("|f(x') - f(x)| (значение в максимуме FSS - теоретический максимум):", np.abs(fss_max_value - max_val))
     print("time: ", fss.time, "sec")
     print("------------------------------------")
 
@@ -55,6 +55,7 @@ def test_2():
     c = convergence.Convergence(fss.history(), 40)
     c.show()
 
+# Функция Розенброка
 def test_3():
     def rosenbrock_func(x, y):
         return (1 - x)*(1 - x) + 100*(y - x*x)*(y - x*x)
@@ -73,6 +74,50 @@ def test_3():
     f, x = fss.max()
     cmp(np.array([0, 0]), 200, x, f, fss)
     c = convergence.Convergence(fss.history(), 200)
+    c.show()
+
+# Функция Экли
+def test_4():
+    def ackley_func(x, y):
+        return -20 * np.exp(-0.2*np.sqrt(0.5*(x*x + y*y))) \
+               - np.exp(0.5*(np.cos(2*np.pi*x) + np.cos(2*np.pi*y))) + np.exp(1) + 20
+
+    fss = FishSchoolSearch(
+        lower_bound_point=[-4, -4],
+        higher_bound_point=[4, 4],
+        population_size=50,
+        iteration_count=100,
+        individual_step_start=3,
+        individual_step_final=0.01,
+        weight_scale=50,
+        func=lambda x: 20 - ackley_func(x[0], x[1]),
+    )
+
+    f, x = fss.max()
+    cmp(np.array([0, 0]), 20, x, f, fss)
+    c = convergence.Convergence(fss.history(), 20)
+    c.show()
+
+# Гладкая функция, или непрерывно дифференцируемая функция, 
+# — функция, имеющая непрерывную производную на всём множестве определения.
+def test_5():
+    def holder_func(x, y):
+        return np.abs(np.sin(x)*np.cos(y)*np.exp(np.abs(1 - np.sqrt(x*x + y*y)/np.pi)))
+
+    fss = FishSchoolSearch(
+        lower_bound_point=[-10, -10],
+        higher_bound_point=[10, 10],
+        population_size=50,
+        iteration_count=200,
+        individual_step_start=5,
+        individual_step_final=0.01,
+        weight_scale=50,
+        func=lambda x: holder_func(x[0], x[1]),
+    )
+
+    f, x = fss.max()
+    cmp(np.array([8.05502, -9.66459]), 19.2085, x, f, fss)
+    c = convergence.Convergence(fss.history(), 19.2085)
     c.show()
 
 def test_6():
@@ -95,51 +140,27 @@ def test_6():
     c = convergence.Convergence(fss.history(), 200)
     c.show()
 
-def test_4():
-    def ackley_func(x, y):
-        return -20 * np.exp(-0.2*np.sqrt(0.5*(x*x + y*y))) \
-               - np.exp(0.5*(np.cos(2*np.pi*x) + np.cos(2*np.pi*y))) + np.exp(1) + 20
-
+def test_7():
     fss = FishSchoolSearch(
-        lower_bound_point=[-4, -4],
-        higher_bound_point=[4, 4],
-        population_size=50,
-        iteration_count=100,
-        individual_step_start=3,
+        lower_bound_point=[-1000, -1000],
+        higher_bound_point=[1000, 1000],
+        population_size=500,
+        iteration_count=2000,
+        individual_step_start=10,
         individual_step_final=0.01,
-        weight_scale=50,
-        func=lambda x: 20 - ackley_func(x[0], x[1]),
+        weight_scale=100,
+        func=lambda x: 10 * (np.sin(0.1*x[0]) + np.sin(0.1*x[1])) + 20,
     )
 
     f, x = fss.max()
-    cmp(np.array([0, 0]), 20, x, f, fss)
-    c = convergence.Convergence(fss.history(), 20)
-    c.show()
-
-def test_5():
-    def holder_func(x, y):
-        return np.abs(np.sin(x)*np.cos(y)*np.exp(np.abs(1 - np.sqrt(x*x + y*y)/np.pi)))
-
-    fss = FishSchoolSearch(
-        lower_bound_point=[-10, -10],
-        higher_bound_point=[10, 10],
-        population_size=50,
-        iteration_count=200,
-        individual_step_start=5,
-        individual_step_final=0.01,
-        weight_scale=50,
-        func=lambda x: holder_func(x[0], x[1]),
-    )
-
-    f, x = fss.max()
-    cmp(np.array([8.05502, -9.66459]), 19.2085, x, f, fss)
-    c = convergence.Convergence(fss.history(), 19.2085)
+    cmp(np.array([10*np.pi/2, 10*np.pi/2]), 40, x, f, fss)
+    c = convergence.Convergence(fss.history(), 40)
     c.show()
 
 if __name__ == '__main__':
     test_1()
     test_2()
-    test_3()
-    test_4()
-    test_5()
-    test_6()
+    # test_3()
+    # test_4()
+    # test_5()
+    # test_6()
