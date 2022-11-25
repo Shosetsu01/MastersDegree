@@ -24,7 +24,7 @@ class Visualization:
 
         self.draw_func(ax, self.line_count, self.point_count)
 
-        pointer, = ax.plot3D([], [], marker="8", linestyle='None', markersize=2, color='red')
+        pointer, = ax.plot3D([], [], marker="8", linestyle='None', markersize=5, color='red')
 
         def init():
             pointer.set_data([], [])

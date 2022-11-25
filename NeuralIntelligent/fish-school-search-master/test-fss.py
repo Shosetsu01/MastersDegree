@@ -31,8 +31,8 @@ def test_1():
         func=lambda x: -0.1 * (x[0] * x[0] + x[1] * x[1]) + 20,
     )
 
-    # v = visualization.Visualization(fss.history())
-    #     # v.start(saved=True, filename="test_1.mp4")
+    v = visualization.Visualization(fss.history())
+    v.start(saved=True, filename="test_1.mp4")
     f, x = fss.max()
     cmp(np.array([0,0]), 20, x, f, fss)
     c = convergence.Convergence(fss.history(), 20)
@@ -50,6 +50,8 @@ def test_2():
         func=lambda x: 10 * (np.sin(0.1*x[0]) + np.sin(0.1*x[1])) + 20,
     )
 
+    v = visualization.Visualization(fss.history())
+    v.start(saved=True, filename="test_2.mp4")
     f, x = fss.max()
     cmp(np.array([10*np.pi/2, 10*np.pi/2]), 40, x, f, fss)
     c = convergence.Convergence(fss.history(), 40)
@@ -142,16 +144,18 @@ def test_6():
 
 def test_7():
     fss = FishSchoolSearch(
-        lower_bound_point=[-1000, -1000],
-        higher_bound_point=[1000, 1000],
-        population_size=500,
-        iteration_count=2000,
+        lower_bound_point=[-500, -500],
+        higher_bound_point=[500, 500],
+        population_size=300,
+        iteration_count=500,
         individual_step_start=10,
         individual_step_final=0.01,
         weight_scale=100,
         func=lambda x: 10 * (np.sin(0.1*x[0]) + np.sin(0.1*x[1])) + 20,
     )
 
+    v = visualization.Visualization(fss.history())
+    v.start(saved=True, filename="test_7.mp4")
     f, x = fss.max()
     cmp(np.array([10*np.pi/2, 10*np.pi/2]), 40, x, f, fss)
     c = convergence.Convergence(fss.history(), 40)
@@ -159,8 +163,9 @@ def test_7():
 
 if __name__ == '__main__':
     test_1()
-    test_2()
+    # test_2()
     # test_3()
     # test_4()
     # test_5()
     # test_6()
+    # test_7()
