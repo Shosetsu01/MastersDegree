@@ -154,16 +154,16 @@ def test_7():
         func=lambda x: 10 * (np.sin(0.1*x[0]) + np.sin(0.1*x[1])) + 20,
     )
 
-    v = visualization.Visualization(fss.history())
-    v.start(saved=True, filename="test_7.mp4")
+    # v = visualization.Visualization(fss.history())
+    # v.start(saved=True, filename="test_7.mp4")
     f, x = fss.max()
     cmp(np.array([10*np.pi/2, 10*np.pi/2]), 40, x, f, fss)
     c = convergence.Convergence(fss.history(), 40)
     c.show()
 
 if __name__ == '__main__':
-    test_1()
-    # test_2()
+    # test_1()
+    test_2()
     # test_3()
     # test_4()
     # test_5()

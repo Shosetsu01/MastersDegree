@@ -20,11 +20,11 @@ class Visualization:
         fig = plt.figure()
 
         ax = fig.add_subplot(projection='3d')
-        ax.view_init(60, 48)
+        ax.view_init(20, 20)
 
         self.draw_func(ax, self.line_count, self.point_count)
 
-        pointer, = ax.plot3D([], [], marker="8", linestyle='None', markersize=5, color='red')
+        pointer, = ax.plot3D([], [], marker="8", linestyle='None', markersize=6, color='red')
 
         def init():
             pointer.set_data([], [])
