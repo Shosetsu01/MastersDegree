@@ -31,8 +31,8 @@ def test_1():
         func=lambda x: -0.1 * (x[0] * x[0] + x[1] * x[1]) + 20,
     )
 
-    v = visualization.Visualization(fss.history())
-    v.start(saved=True, filename="test_1.mp4")
+    # v = visualization.Visualization(fss.history())
+    # v.start(saved=True, filename="test_1.mp4")
     f, x = fss.max()
     cmp(np.array([0,0]), 20, x, f, fss)
     c = convergence.Convergence(fss.history(), 20)
@@ -43,7 +43,7 @@ def test_2():
         lower_bound_point=[-100, -100],
         higher_bound_point=[100, 100],
         population_size=50,
-        iteration_count=100,
+        iteration_count=300,
         individual_step_start=10,
         individual_step_final=0.01,
         weight_scale=50,
@@ -85,8 +85,8 @@ def test_4():
                - np.exp(0.5*(np.cos(2*np.pi*x) + np.cos(2*np.pi*y))) + np.exp(1) + 20
 
     fss = FishSchoolSearch(
-        lower_bound_point=[-4, -4],
-        higher_bound_point=[4, 4],
+        lower_bound_point=[-10, -10],
+        higher_bound_point=[10, 10],
         population_size=50,
         iteration_count=100,
         individual_step_start=3,
@@ -95,13 +95,14 @@ def test_4():
         func=lambda x: 20 - ackley_func(x[0], x[1]),
     )
 
+    # v = visualization.Visualization(fss.history())
+    # v.start(saved=True, filename="test_4.mp4")
     f, x = fss.max()
     cmp(np.array([0, 0]), 20, x, f, fss)
     c = convergence.Convergence(fss.history(), 20)
     c.show()
 
-# Гладкая функция, или непрерывно дифференцируемая функция, 
-# — функция, имеющая непрерывную производную на всём множестве определения.
+# Гладкая функция
 def test_5():
     def holder_func(x, y):
         return np.abs(np.sin(x)*np.cos(y)*np.exp(np.abs(1 - np.sqrt(x*x + y*y)/np.pi)))
@@ -117,6 +118,8 @@ def test_5():
         func=lambda x: holder_func(x[0], x[1]),
     )
 
+    # v = visualization.Visualization(fss.history())
+    # v.start(saved=True, filename="test_5.mp4")
     f, x = fss.max()
     cmp(np.array([8.05502, -9.66459]), 19.2085, x, f, fss)
     c = convergence.Convergence(fss.history(), 19.2085)
@@ -144,10 +147,10 @@ def test_6():
 
 def test_7():
     fss = FishSchoolSearch(
-        lower_bound_point=[-500, -500],
-        higher_bound_point=[500, 500],
-        population_size=300,
-        iteration_count=500,
+        lower_bound_point=[-10, -10],
+        higher_bound_point=[10, 10],
+        population_size=50,
+        iteration_count=100,
         individual_step_start=10,
         individual_step_final=0.01,
         weight_scale=100,
