@@ -83,8 +83,6 @@ def multiplication_point(p, k, a):
     return answer
 
 
-
-
 def generate_keys():
     global n
     global P

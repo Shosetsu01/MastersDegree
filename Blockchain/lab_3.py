@@ -22,7 +22,7 @@ def generat_str(num):
     thread_pool = {}
     while not flag:
         for i in range(150):
-            size = random.randint(1, 9999)
+            size = random.randint(1, 1000)
             for j in range(size):
                 char = random.randint(32, 126)
                 str1 += chr(char)

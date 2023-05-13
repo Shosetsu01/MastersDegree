@@ -125,26 +125,6 @@ def test_5():
     c = convergence.Convergence(fss.history(), 19.2085)
     c.show()
 
-def test_6():
-    def rosenbrock_func(x):
-        return sum((1 - x[i])*(1 - x[i]) + 100*(x[i+1] - x[i]*x[i])*(x[i+1] - x[i]*x[i]) for i in range(1, len(x) - 1, 1))
-
-    fss = FishSchoolSearch(
-        lower_bound_point=[-1, -1, -1, -1],
-        higher_bound_point=[2, 2, 2, 2],
-        population_size=50,
-        iteration_count=500,
-        individual_step_start=1,
-        individual_step_final=0.01,
-        weight_scale=50,
-        func=lambda x: 200 - rosenbrock_func(x),
-    )
-
-    f, x = fss.max()
-    cmp(np.array([1, 1, 1, 1]), 200, x, f, fss)
-    c = convergence.Convergence(fss.history(), 200)
-    c.show()
-
 def test_7():
     fss = FishSchoolSearch(
         lower_bound_point=[-10, -10],
@@ -164,11 +144,55 @@ def test_7():
     c = convergence.Convergence(fss.history(), 40)
     c.show()
 
+def test_8():
+    def function(x):
+        f = 0
+        for i in range(len(x) - 1):
+            f += x[i] * math.sin(math.sqrt(abs(x[i] - x[i + 1] - 47))) - (x[i + 1] + 47) * math.sin(math.sqrt(abs(x[i + 1] + x[i] / 2 + 47)))
+        return f
+
+    fss = FishSchoolSearch(
+        lower_bound_point=[-512, -512, -512, -512],
+        higher_bound_point=[512, 512, 512, 512],
+        population_size=1000,
+        iteration_count=1000,
+        individual_step_start=50,
+        individual_step_final=10,
+        weight_scale=50,
+        func=lambda x: function(x),
+    )
+
+    f, x = fss.max()
+    cmp(np.array([1, 1, 1, 1]), 512, x, f, fss)
+    c = convergence.Convergence(fss.history(), 512)
+    c.show()
+
+def test_6():
+    def func(x):
+        return sum((1 + x[i])*(1 + x[i]) + 100*(x[i+1] - x[i]*x[i])*(x[i+1] - x[i]*x[i]) for i in range(1, len(x) - 1, 1))
+
+    fss = FishSchoolSearch(
+        lower_bound_point=[-1, -1, -1, -1, -1, -1],
+        higher_bound_point=[2, 2, 2, 2, 2, 2],
+        population_size=300,
+        iteration_count=5000,
+        individual_step_start=2,
+        individual_step_final=0.01,
+        weight_scale=100,
+        func=lambda x: 500 - func(x),
+    )
+
+    f, x = fss.max()
+    cmp(np.array([1, 1, 1, 1, 1, 1]), 500, x, f, fss)
+    c = convergence.Convergence(fss.history(), 500)
+    c.show()
+
 if __name__ == '__main__':
     # test_1()
-    test_2()
+    # test_2()
     # test_3()
     # test_4()
     # test_5()
-    # test_6()
+    test_6()
     # test_7()
+    # test_8()
